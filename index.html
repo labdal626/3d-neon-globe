@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neon Globe 3D</title>
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+</head>
+<body>
+  <!-- Loading Bar -->
+  <div id="loading-bar" class="loading-bar">
+    <div class="neon-progress"></div>
+    <p>Loading...</p>
+  </div>
+
+  <!-- Model Viewer -->
+  <model-viewer 
+    id="model-viewer"
+    src="assets/globe.glb" 
+    alt="Neon Globe"
+    ar 
+    auto-rotate 
+    camera-controls 
+    shadow-intensity="1"
+    style="display: none; width: 100%; height: 100vh;">
+  </model-viewer>
+
+  <!-- Script for Loading Animation -->
+  <script>
+    // Simulasi loading
+    const loadingBar = document.getElementById('loading-bar');
+    const progressBar = document.querySelector('.neon-progress');
+    const modelViewer = document.getElementById('model-viewer');
+
+    let progress = 0;
+    const interval = setInterval(() => {
+      if (progress >= 100) {
+        clearInterval(interval);
+        // Tampilkan model setelah loading selesai
+        loadingBar.style.display = 'none';
+        modelViewer.style.display = 'block';
+        modelViewer.addEventListener('load', () => {
+          console.log('Model loaded successfully!');
+        });
+      } else {
+        progress += 5; // Naikkan progress secara bertahap
+        progressBar.style.width = `${progress}%`;
+      }
+    }, 200); // Interval loading (dapat disesuaikan)
+
+    // Event listener jika model sudah dimuat
+    modelViewer.addEventListener('load', () => {
+      console.log('Model loaded successfully!');
+    });
+  </script>
+</body>
+</html>
